@@ -10,49 +10,49 @@ public struct TextStyle<Font: FontType> {
   var lineHeight: CGFloat
   var tracking: CGFloat
 
-  /// 34pts black.
+  /// 34pts regular.
   static var largeTitle: TextStyle<SystemFont> {
-    .init(style: .largeTitle, weight: .bold, lineHeight: 0, tracking: 0)
+    .init(style: .largeTitle, weight: .regular, lineHeight: 0, tracking: 0.40)
   }
 
-  /// 24pts bold.
+  /// 24pts regular.
   static var title1: TextStyle<SystemFont> {
-    .init(style: .title1, weight: .bold, lineHeight: 0, tracking: 0)
+    .init(style: .title1, weight: .regular, lineHeight: 0, tracking: 0.07)
   }
 
-  /// 22pts bold.
+  /// 22pts regular.
   static var title2: TextStyle<SystemFont> {
-    .init(style: .title2, weight: .bold, lineHeight: 0, tracking: 0)
+    .init(style: .title2, weight: .regular, lineHeight: 0, tracking: -0.26)
   }
 
   /// 20pts regular.
   static var title3: TextStyle<SystemFont> {
-    .init(style: .title3, weight: .regular, lineHeight: 0, tracking: 0)
+    .init(style: .title3, weight: .regular, lineHeight: 0, tracking: -0.45)
   }
 
-  /// 17pts medium.
+  /// 17pts semibold.
   static var headline: TextStyle<SystemFont> {
-    .init(style: .headline, weight: .medium, lineHeight: 0, tracking: 0)
+    .init(style: .headline, weight: .semibold, lineHeight: 0, tracking: -0.43)
   }
 
   /// 17pts regular.
   static var body: TextStyle<SystemFont> {
-    .init(style: .body, weight: .regular, lineHeight: 0, tracking: 0)
+    .init(style: .body, weight: .regular, lineHeight: 0, tracking: -0.43)
   }
 
-  /// 16pts medium.
+  /// 16pts regular.
   static var callout: TextStyle<SystemFont> {
-    .init(style: .callout, weight: .medium, lineHeight: 0, tracking: 0)
+    .init(style: .callout, weight: .regular, lineHeight: 0, tracking: -0.31)
   }
 
   /// 15pts regular.
   static var subheadline: TextStyle<SystemFont> {
-    .init(style: .subheadline, weight: .regular, lineHeight: 0, tracking: 0)
+    .init(style: .subheadline, weight: .regular, lineHeight: 0, tracking: -0.23)
   }
 
   /// 13pts regular.
   static var footnote: TextStyle<SystemFont> {
-    .init(style: .footnote, weight: .regular, lineHeight: 0, tracking: 0)
+    .init(style: .footnote, weight: .regular, lineHeight: 0, tracking: -0.15)
   }
 
   /// 12pts regular.
@@ -62,7 +62,7 @@ public struct TextStyle<Font: FontType> {
 
   /// 11pts regular.
   static var caption2: TextStyle<SystemFont> {
-    .init(style: .caption2, weight: .regular, lineHeight: 0, tracking: 0)
+    .init(style: .caption2, weight: .regular, lineHeight: 0, tracking: 0.06)
   }
 
 
