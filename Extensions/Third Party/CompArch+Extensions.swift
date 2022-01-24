@@ -1,12 +1,14 @@
 import Foundation
 import Combine
+import SwiftUI
 
 #if canImport(ComposableArchitecture)
 import ComposableArchitecture
 
-typealias EffectFactory<S, E: Error> = Factory<Effect<S, E>>
 
-protocol StateType: Equatable {
+// MARK: -  State
+
+public protocol StateType: Equatable {
   associatedtype Action
   associatedtype Environment
 
@@ -30,6 +32,11 @@ public extension  Store where State: StateType {
 }
 #endif
 
+
+// MARK: - Effect
+
+typealias EffectFactory<S, E: Error> = Factory<Effect<S, E>>
+
 public extension  Effect {
   init(anyPublisher: AnyPublisher<Output, Failure>) {
     self.init(anyPublisher)
@@ -41,9 +48,9 @@ public extension  Effect {
 }
 
 
-import SwiftUI
+// MARK: - View
 
-protocol ComposableView: View {
+public protocol ComposableView: View {
   associatedtype ViewState: StateType
   associatedtype Content: View
 
