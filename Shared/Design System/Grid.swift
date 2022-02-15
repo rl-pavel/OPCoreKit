@@ -1,4 +1,5 @@
-import UIKit
+import Foundation
+import CoreGraphics
 
 public extension Numeric {
   static var x2: Self { 2 }
@@ -14,5 +15,19 @@ public extension Numeric {
   static var x32: Self { 32 }
   static var x36: Self { 36 }
   static var x40: Self { 40 }
+}
+
+#if canImport(UIKit)
+import UIKit
+
+public extension Numeric {
   static var pixel: CGFloat { 1.0 / UIScreen.main.scale }
 }
+
+#elseif canImport(AppKit)
+import AppKit
+
+public extension Numeric {
+  static var pixel: CGFloat { NSScreen.main.map { 1.0 / $0.backingScaleFactor } ?? 1 }
+}
+#endif

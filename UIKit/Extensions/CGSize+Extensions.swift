@@ -1,4 +1,4 @@
-import UIKit
+import CoreGraphics
 
 public extension CGSize {
   init(_ size: CGFloat) {

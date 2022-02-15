@@ -1,15 +1,21 @@
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+#endif
+#if canImport(AppKit)
+import AppKit
+#endif
 
 /// A type that defines a set of text styles used in the app.
 public struct TextStyle<Font: FontType> {
   private let fontType: Font
 
-  var uiFont: UIFont { fontType.uiFont }
   var font: SwiftUI.Font { fontType.font }
+  var platformFont: PlatformFont { fontType.platformFont }
+  
   var lineHeight: CGFloat
   var tracking: CGFloat
-
+  
   /// 34pts regular.
   static var largeTitle: TextStyle<SystemFont> {
     .init(style: .largeTitle, weight: .regular, lineHeight: 0, tracking: 0.40)
@@ -66,7 +72,7 @@ public struct TextStyle<Font: FontType> {
   }
 
 
-  private init(style: UIFont.TextStyle, weight: Font.WeightType, lineHeight: CGFloat, tracking: CGFloat) {
+  private init(style: TypeStyle, weight: Font.WeightType, lineHeight: CGFloat, tracking: CGFloat) {
     self.fontType = .init(style: style, weight: weight)
     self.lineHeight = lineHeight / 100
     self.tracking = tracking
@@ -74,67 +80,85 @@ public struct TextStyle<Font: FontType> {
 }
 
 
-// MARK: - UI Styling
+// MARK: - UIKit Styling
 
+#if canImport(UIKit)
 public extension UILabel {
+  func applyStyle() {
+    numberOfLines = 0
+    lineBreakMode = .byWordWrapping
+    adjustsFontForContentSizeCategory = true
+  }
+  
   /// ⚠️ This extension will not apply the tracking/line spacing, using `NSAttributedString` is required.
   func applyStyle<Font: FontType>(
     _ style: TextStyle<Font>,
     color: UIColor,
     alignment: NSTextAlignment = .left) {
-      font = style.uiFont
+      applyStyle()
+      font = style.platformFont
       textColor = color
-      numberOfLines = 0
-      lineBreakMode = .byWordWrapping
       textAlignment = alignment
-      adjustsFontForContentSizeCategory = true
     }
 }
 
 public extension UIButton {
+  func applyStyle() {
+    titleLabel?.numberOfLines = 0
+    titleLabel?.lineBreakMode = .byWordWrapping
+    titleLabel?.adjustsFontForContentSizeCategory = true
+  }
+  
   /// ⚠️ This extension will not apply the tracking/line spacing, using `NSAttributedString` is required.
   func applyStyle<Font: FontType>(
     _ style: TextStyle<Font>,
     color: UIColor,
     alignment: NSTextAlignment = .left) {
+      applyStyle()
       setTitleColor(color, for: .normal)
-      titleLabel?.font = style.uiFont
-      titleLabel?.numberOfLines = 0
-      titleLabel?.lineBreakMode = .byWordWrapping
+      titleLabel?.font = style.platformFont
       titleLabel?.textAlignment = alignment
-      titleLabel?.adjustsFontForContentSizeCategory = true
     }
 }
 
 public extension UITextField {
+  func applyStyle() {
+    adjustsFontForContentSizeCategory = true
+  }
+  
   func applyStyle<Font: FontType>(
     _ style: TextStyle<Font>,
     color: UIColor,
     alignment: NSTextAlignment = .left) {
-      font = style.uiFont
+      applyStyle()
+      font = style.platformFont
       textColor = color
       textAlignment = alignment
-      adjustsFontForContentSizeCategory = true
       defaultTextAttributes = .attributes(for: style, color: color, alignment: alignment)
       typingAttributes = .attributes(for: style, color: color, alignment: alignment)
     }
 }
 
 public extension UITextView {
+  func applyStyle() {
+    textContainer.lineBreakMode = .byWordWrapping
+    isScrollEnabled = false
+    backgroundColor = .clear
+    adjustsFontForContentSizeCategory = true
+  }
+  
   func applyStyle<Font: FontType>(
     _ style: TextStyle<Font>,
     color: UIColor,
     alignment: NSTextAlignment = .left) {
-      font = style.uiFont
+      applyStyle()
+      font = style.platformFont
       textColor = color
       textAlignment = alignment
-      textContainer.lineBreakMode = .byWordWrapping
-      isScrollEnabled = false
-      backgroundColor = .clear
-      adjustsFontForContentSizeCategory = true
       typingAttributes = .attributes(for: style, color: color, alignment: alignment)
     }
 }
+#endif
 
 public extension Text {
   func applyStyle<Font: FontType>(_ style: TextStyle<Font>) -> some View {
@@ -210,7 +234,7 @@ fileprivate extension NSMutableParagraphStyle {
 public extension Dictionary where Key == NSAttributedString.Key, Value: Any {
   static func attributes<Font: FontType>(for style: TextStyle<Font>) -> [NSAttributedString.Key: Any] {
     [
-      .font: style.uiFont,
+      .font: style.platformFont,
       .tracking: style.tracking,
       .paragraphStyle: NSMutableParagraphStyle(style: style)
     ]
@@ -218,35 +242,24 @@ public extension Dictionary where Key == NSAttributedString.Key, Value: Any {
   
   static func attributes<Font: FontType>(
     for style: TextStyle<Font>,
-    color: UIColor) -> [NSAttributedString.Key: Any] {
-      [
-        .font: style.uiFont,
-        .foregroundColor: color,
-        .tracking: style.tracking,
-        .paragraphStyle: NSMutableParagraphStyle(style: style)
-      ]
+    color: PlatformColor) -> [NSAttributedString.Key: Any] {
+      attributes(for: style)
+        .merging([.foregroundColor: color])
     }
   
   static func attributes<Font: FontType>(
     for style: TextStyle<Font>,
     alignment: NSTextAlignment) -> [NSAttributedString.Key: Any] {
-      [
-        .font: style.uiFont,
-        .tracking: style.tracking,
-        .paragraphStyle: NSMutableParagraphStyle(style: style, alignment: alignment)
-      ]
+      attributes(for: style)
+        .merging([.paragraphStyle: NSMutableParagraphStyle(style: style, alignment: alignment)])
     }
   
   static func attributes<Font: FontType>(
     for style: TextStyle<Font>,
-    color: UIColor,
+    color: PlatformColor,
     alignment: NSTextAlignment) -> [NSAttributedString.Key: Any] {
-      [
-        .font: style.uiFont,
-        .foregroundColor: color,
-        .tracking: style.tracking,
-        .paragraphStyle: NSMutableParagraphStyle(style: style, alignment: alignment)
-      ]
+      attributes(for: style, alignment: alignment)
+        .merging([.foregroundColor: color])
     }
 }
 
@@ -259,7 +272,7 @@ public extension NSAttributedString {
     self.init(string: string, attributes: .attributes(for: style))
   }
 
-  convenience init<Font: FontType>(_ string: String, style: TextStyle<Font>, color: UIColor) {
+  convenience init<Font: FontType>(_ string: String, style: TextStyle<Font>, color: PlatformColor) {
     self.init(string: string, attributes: .attributes(for: style, color: color))
   }
   
@@ -270,7 +283,7 @@ public extension NSAttributedString {
   convenience init<Font: FontType>(
     _ string: String,
     style: TextStyle<Font>,
-    color: UIColor,
+    color: PlatformColor,
     alignment: NSTextAlignment) {
       self.init(string: string, attributes: .attributes(for: style, color: color, alignment: alignment))
   }
@@ -284,7 +297,7 @@ extension NSMutableAttributedString {
     )
   }
   
-  func applyStyle<Font: FontType>(_ style: TextStyle<Font>, color: UIColor, to range: NSRange? = nil) {
+  func applyStyle<Font: FontType>(_ style: TextStyle<Font>, color: PlatformColor, to range: NSRange? = nil) {
     addAttributes(
       .attributes(for: style, color: color),
       range: range ?? NSRange(location: 0, length: string.count)
@@ -300,7 +313,7 @@ extension NSMutableAttributedString {
   
   func applyStyle<Font: FontType>(
     _ style: TextStyle<Font>,
-    color: UIColor,
+    color: PlatformColor,
     alignment: NSTextAlignment,
     to range: NSRange? = nil) {
       addAttributes(

@@ -15,11 +15,11 @@ public extension Text {
     string.enumerateAttributes(in: NSRange(location: 0, length: string.length), options: []) { attribute, range, _ in
       var styledText = Text(string.attributedSubstring(from: range).string)
       
-      if let color = attribute[.foregroundColor] as? UIColor {
+      if let color = attribute[.foregroundColor] as? PlatformColor {
         styledText = styledText.foregroundColor(Color(color))
       }
       
-      if let font = attribute[.font] as? UIFont {
+      if let font = attribute[.font] as? PlatformFont {
         styledText = styledText.font(.init(font))
       }
       
@@ -29,7 +29,7 @@ public extension Text {
       
       
       if let strikeThrough = attribute[.strikethroughStyle] as? NSNumber, strikeThrough != 0 {
-        if let strikeColor = (attribute[.strikethroughColor] as? UIColor) {
+        if let strikeColor = (attribute[.strikethroughColor] as? PlatformColor) {
           styledText = styledText.strikethrough(true, color: Color(strikeColor))
         } else {
           styledText = styledText.strikethrough(true)
@@ -41,7 +41,7 @@ public extension Text {
       }
       
       if let underline = attribute[.underlineStyle] as? NSNumber, underline != 0 {
-        if let underlineColor = (attribute[.underlineColor] as? UIColor) {
+        if let underlineColor = (attribute[.underlineColor] as? PlatformColor) {
           styledText = styledText.underline(true, color: Color(underlineColor))
         } else {
           styledText = styledText.underline(true)

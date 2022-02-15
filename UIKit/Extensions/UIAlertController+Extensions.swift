@@ -2,7 +2,7 @@ import UIKit
 
 extension UIAlertController {
   struct Confirmation {
-    var title: String = L10n.continue
+    var title: String
     var isDestructive: Bool = false
     var handler: VoidClosure
   }
@@ -12,7 +12,7 @@ extension UIAlertController {
     message: String? = nil,
     style: UIAlertController.Style = .alert,
     confirmation: Confirmation? = nil,
-    cancel: String = L10n.cancel) -> UIAlertController {
+    cancel: String) -> UIAlertController {
       Init(UIAlertController(title: title, message: message, preferredStyle: style)) { alert in
         if let confirmation = confirmation {
           alert.addAction(
