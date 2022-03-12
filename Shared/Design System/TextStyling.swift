@@ -10,14 +10,14 @@ import AppKit
 public struct TextStyle<Font: FontType> {
   private let fontType: Font
 
-  var font: SwiftUI.Font { fontType.font }
-  var platformFont: PlatformFont { fontType.platformFont }
+  public var font: SwiftUI.Font { fontType.font }
+  public var platformFont: PlatformFont { fontType.platformFont }
   
-  var lineHeight: CGFloat
-  var tracking: CGFloat
+  public var lineHeight: CGFloat
+  public var tracking: CGFloat
   
   /// 34pts regular.
-  static var largeTitle: TextStyle<SystemFont> {
+  public static var largeTitle: TextStyle<SystemFont> {
     .init(style: .largeTitle, weight: .regular, lineHeight: 0, tracking: 0.40)
   }
 

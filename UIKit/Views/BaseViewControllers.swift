@@ -1,5 +1,6 @@
-import SwiftUI
+#if canImport(UIKit)
 import UIKit
+import SwiftUI
 
 class ViewController: UIViewController {
   override func viewDidLoad() {
@@ -88,3 +89,4 @@ private extension Host {
     }
   }
 }
+#endif

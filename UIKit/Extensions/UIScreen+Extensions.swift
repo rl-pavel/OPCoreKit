@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 public extension UIScreen {
@@ -5,3 +6,4 @@ public extension UIScreen {
   static var width: CGFloat { size.width }
   static var height: CGFloat { size.height }
 }
+#endif

@@ -1,5 +1,5 @@
+#if canImport(UIKit)
 import UIKit
-import SwiftUI
 
 public extension UITraitCollection {
   var isNormalSize: Bool {
@@ -10,3 +10,4 @@ public extension UITraitCollection {
     preferredContentSizeCategory >= .extraExtraExtraLarge
   }
 }
+#endif

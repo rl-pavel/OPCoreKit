@@ -1,4 +1,4 @@
-import UIKit
+import QuartzCore
 
 public extension CACornerMask {
   static var topLeft: CACornerMask { .layerMinXMinYCorner }
@@ -14,7 +14,7 @@ public extension CALayer {
     radius: CGFloat,
     cornerCurve: CALayerCornerCurve = .continuous,
     borderWidth: CGFloat = 0,
-    borderColor: UIColor = .clear) {
+    borderColor: PlatformColor = .clear) {
       cornerRadius = radius
       maskedCorners = corners
       self.cornerCurve = cornerCurve

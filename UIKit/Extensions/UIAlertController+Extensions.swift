@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 extension UIAlertController {
@@ -26,3 +27,4 @@ extension UIAlertController {
       }
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 public extension UIStackView {
@@ -5,3 +6,4 @@ public extension UIStackView {
     subviews.forEach { addArrangedSubview($0) }
   }
 }
+#endif

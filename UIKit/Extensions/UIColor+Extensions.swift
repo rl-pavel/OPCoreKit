@@ -1,5 +1,5 @@
+#if canImport(UIKit)
 import UIKit
-import SwiftUI
 
 public extension UIColor {
   convenience init(hex: Int, alpha: CGFloat = 1.0) {
@@ -32,3 +32,4 @@ public extension UIColor {
       alpha: alpha)
   }
 }
+#endif

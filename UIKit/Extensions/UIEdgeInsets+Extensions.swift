@@ -1,4 +1,4 @@
-import SwiftUI
+#if canImport(UIKit)
 import UIKit
 
 public extension UIEdgeInsets {
@@ -23,3 +23,4 @@ public extension UIEdgeInsets {
     return resultInsets
   }
 }
+#endif

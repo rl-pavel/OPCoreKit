@@ -1,4 +1,5 @@
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
 
 // TODO: - Deprecate when Apple fixes this mess - reproducible example in the preview below.
@@ -102,4 +103,5 @@ struct ResizableHelper_Previews: PreviewProvider {
     }
   }
 }
+#endif
 #endif
