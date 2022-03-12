@@ -39,10 +39,7 @@ extension Optional where Wrapped: Collection {
 /// Usage: `print(someOptional?.someNonStringValue ??? "default string")`
 infix operator ???: NilCoalescingPrecedence
 public func ???<T>(optional: T?, defaultValue: @autoclosure () -> String) -> String {
-  switch optional {
-    case let value?: return String(describing: value)
-    case nil: return defaultValue()
-  }
+  return optional.map(String.init(describing:)) ?? defaultValue()
 }
 
 

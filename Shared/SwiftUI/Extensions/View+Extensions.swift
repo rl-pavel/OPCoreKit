@@ -82,12 +82,13 @@ public extension View {
   
 #if DEBUG
   /// Adds a colored overlay showing the size of the view for debugging purposes.
-  func sizeDebugOverlay(color: Color = .red) -> some View {
+  func debugSizeOverlay(color: Color = .red) -> some View {
     self.overlay(
       GeometryReader { frame in
         color.opacity(0.15)
           .overlay(
             Text("w\(Int(frame.size.width)) h\(Int(frame.size.height))")
+              .opacity(0.8)
               .font(.title)
               .foregroundColor(.red)
               .minimumScaleFactor(0.1)

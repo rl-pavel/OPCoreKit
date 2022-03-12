@@ -5,7 +5,7 @@ import Foundation
 public typealias AnyResultPublisher<Success, Failure: Error> = AnyPublisher<Result<Success, Failure>, Never>
 
 extension Publisher {
-  func mapVoid() -> Publishers.Map<Self, Void> {
+  func asVoid() -> Publishers.Map<Self, Void> {
     map { _ in Void() }
   }
   
@@ -17,9 +17,13 @@ extension Publisher {
       .eraseToAnyPublisher()
   }
   
+  func fireAndForget() -> AnyCancellable {
+    sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+  }
+  
   /// Subscribes to a publisher, executing the request(s), without handling the result.
   func fireAndForget(storedIn subscriptions: inout Set<AnyCancellable>) {
-    self.sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+    sink(receiveCompletion: { _ in }, receiveValue: { _ in })
       .store(in: &subscriptions)
   }
 }

@@ -28,15 +28,4 @@ struct CircularFont: FontType {
   
   var style: TypeStyle
   var weight: Weight
-  
-//  var uiFont: UIFont { dynamicUIFont(with: style, name: weight.fontName) }
-//  var font: Font { dynamicFont(with: style, name: weight.fontName) }
-  
-//  static func staticFont(size: CGFloat, weight: Weight = .regular) -> Font {
-//    .custom(weight.fontName, size: size)
-//  }
-//
-//  static func staticUIFont(size: CGFloat, weight: Weight = .regular) -> UIFont {
-//    .init(name: weight.fontName, size: size)!
-//  }
 }
