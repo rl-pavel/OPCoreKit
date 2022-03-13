@@ -4,7 +4,7 @@ import Foundation
 /// AnyPublisher<Result<Success, Failure>, Never>
 public typealias AnyResultPublisher<Success, Failure: Error> = AnyPublisher<Result<Success, Failure>, Never>
 
-extension Publisher {
+public extension Publisher {
   func asVoid() -> Publishers.Map<Self, Void> {
     map { _ in Void() }
   }
@@ -17,6 +17,13 @@ extension Publisher {
       .eraseToAnyPublisher()
   }
   
+  func ignoreFailure() -> AnyPublisher<Output, Never> {
+    self
+      .catch { _ in Empty() }
+      .setFailureType(to: Never.self)
+      .eraseToAnyPublisher()
+  }
+
   func fireAndForget() -> AnyCancellable {
     sink(receiveCompletion: { _ in }, receiveValue: { _ in })
   }

@@ -4,6 +4,11 @@ import SwiftUI
 #if canImport(ComposableArchitecture)
 import ComposableArchitecture
 
+// MARK: - Store
+
+public typealias StoreFor<S: StateType> = Store<S, S.Action>
+public typealias ViewStoreFor<S: StateType> = ViewStore<S, S.Action>
+
 
 // MARK: -  State
 
@@ -34,7 +39,7 @@ public extension  Store where State: StateType {
 
 // MARK: - Effect
 
-typealias EffectFactory<S, E: Error> = Factory<Effect<S, E>>
+public typealias EffectFactory<S, E: Error> = Factory<Effect<S, E>>
 
 public extension  Effect {
   init(anyPublisher: AnyPublisher<Output, Failure>) {
@@ -53,10 +58,8 @@ public protocol ComposableView: View {
   associatedtype ViewState: StateType
   associatedtype Content: View
 
-  typealias ViewStoreType = ViewStore<ViewState, ViewState.Action>
-
-  var store: Store<ViewState, ViewState.Action> { get }
-  func body(with viewStore: ViewStore<ViewState, ViewState.Action>) -> Content
+  var store: StoreFor<ViewState> { get }
+  func body(with viewStore: ViewStoreFor<ViewState>) -> Content
 }
 
 public extension  ComposableView {
