@@ -9,7 +9,9 @@ public extension URL {
     try? resourceValues(forKeys: [key]).allValues.first?.value
   }
   
-  func withPath(_ components: String...) -> URL {
-    components.reduce(self) { $0.appendingPathComponent($1) }
+  func withPath(_ components: String..., ext: String) -> URL {
+    components
+      .reduce(self) { $0.appendingPathComponent($1) }
+      .appendingPathExtension(ext)
   }
 }

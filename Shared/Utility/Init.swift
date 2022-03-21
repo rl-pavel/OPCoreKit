@@ -10,7 +10,7 @@ import Foundation
 ///   $0.textColor = ...
 /// }
 /// ```
-func Init<Type>(_ object: Type, _ update: Closure<Type>) -> Type {
+public func Init<Type>(_ object: Type, _ update: Closure<Type>) -> Type {
   update(object)
   return object
 }
@@ -23,6 +23,6 @@ func Init<Type>(_ object: Type, _ update: Closure<Type>) -> Type {
 ///   $0.minimumLineSpacing = ...
 ///   return UICollectionView(frame: .zero, collectionViewLayout: $0)
 /// }
-func MapInit<Type, Result>(_ object: Type, _ transform: Transform<Type, Result>) -> Result {
+public func MapInit<Type, Result>(_ object: Type, _ transform: Transform<Type, Result>) -> Result {
   return transform(object)
 }
