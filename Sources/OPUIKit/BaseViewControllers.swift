@@ -2,7 +2,7 @@ import OPFoundation
 import SwiftUI
 
 /// UIHostingController subclass for hosting SwiftUI views.
-class Host<Content: View>: UIHostingController<Content> {
+open class Host<Content: View>: UIHostingController<Content> {
   init(backgroundColor: UIColor = .clear, @ViewBuilder content: Factory<Content>) {
     super.init(rootView: content())
     view.backgroundColor = backgroundColor
@@ -14,13 +14,13 @@ class Host<Content: View>: UIHostingController<Content> {
   }
   
   @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
+  required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 }
 
-class ViewController: UIViewController {
-  override func viewDidLoad() {
+open class ViewController: UIViewController {
+  public override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
   }

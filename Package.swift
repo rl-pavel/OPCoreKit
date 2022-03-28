@@ -10,20 +10,14 @@ extension BuildItem {
   static let opUIKit: BuildItem = .core(name: "OPUIKit")
 }
 
-var items: [BuildItem] = [
+
+// MARK: - Package
+
+let items: [BuildItem] = [
   .opFoundation, .opCombine,
   .opTypography, .opSwiftUI,
-]
-
-#if os(iOS)
-items.append(contentsOf: [
   .opUIKit
-])
-#elseif os(macOS)
-items.append(contentsOf: [
-  
-])
-#endif
+]
 
 let package = Package(
   name: "OPCore",

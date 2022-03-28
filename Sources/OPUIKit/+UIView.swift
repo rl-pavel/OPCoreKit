@@ -1,3 +1,4 @@
+import OPFoundation
 import UIKit
 
 public extension UIView {
@@ -46,7 +47,7 @@ public extension UIView {
   }
   
   static var spacer: UIView {
-    Init(UIView()) {
+    update(UIView()) {
       $0.isUserInteractionEnabled = false
       $0.setContentCompressionResistancePriority(.init(0), for: .horizontal)
       $0.setContentCompressionResistancePriority(.init(0), for: .vertical)

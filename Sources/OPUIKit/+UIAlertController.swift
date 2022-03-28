@@ -1,3 +1,4 @@
+import OPFoundation
 import UIKit
 
 extension UIAlertController {
@@ -13,7 +14,7 @@ extension UIAlertController {
     style: UIAlertController.Style = .alert,
     confirmation: Confirmation? = nil,
     cancel: String) -> UIAlertController {
-      Init(UIAlertController(title: title, message: message, preferredStyle: style)) { alert in
+      update(UIAlertController(title: title, message: message, preferredStyle: style)) { alert in
         if let confirmation = confirmation {
           alert.addAction(
             UIAlertAction(title: confirmation.title, style: confirmation.isDestructive ? .destructive : .default) { _ in
