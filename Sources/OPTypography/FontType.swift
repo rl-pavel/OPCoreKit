@@ -1,15 +1,5 @@
+import OPFoundation
 import SwiftUI
-
-#if canImport(UIKit)
-import UIKit
-public typealias PlatformColor = UIColor
-public typealias PlatformFont = UIFont
-
-#elseif canImport(AppKit)
-import AppKit
-public typealias PlatformColor = NSColor
-public typealias PlatformFont = NSFont
-#endif
 
 public enum TypeStyle {
   case largeTitle, title1, title2, title3, headline, body, callout, subheadline, footnote, caption1, caption2
@@ -107,7 +97,7 @@ public extension FontType where WeightType: CustomFontWeight {
     let baseFont = UIFont(name: weight.fontWeightName, size: pointSize)!
     return UIFontMetrics(forTextStyle: style.platform).scaledFont(for: baseFont)
 #else
-      .init(name: weight.fontWeightName, size: pointSize)!
+    .init(name: weight.fontWeightName, size: pointSize)!
 #endif
   }
 }
