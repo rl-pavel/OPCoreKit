@@ -1,7 +1,5 @@
 import Foundation
 
-// MARK: - Array
-
 public extension Array {
   /// Creates pairs of arrays with a specified count of elements.
   ///
