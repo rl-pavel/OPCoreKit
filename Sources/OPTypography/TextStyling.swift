@@ -1,11 +1,5 @@
 import OPFoundation
 import SwiftUI
-#if canImport(UIKit)
-import UIKit
-#endif
-#if canImport(AppKit)
-import AppKit
-#endif
 
 /// A type that defines a set of text styles used in the app.
 public struct TextStyle<Font: FontType> {
@@ -28,6 +22,8 @@ public struct TextStyle<Font: FontType> {
 // MARK: - UIKit Styling
 
 #if canImport(UIKit)
+import UIKit
+
 public extension UILabel {
   func applyStyle() {
     numberOfLines = 0
@@ -100,6 +96,26 @@ public extension UITextView {
       font = style.platformFont
       textColor = color
       textAlignment = alignment
+      typingAttributes = .attributes(for: style, color: color, alignment: alignment)
+    }
+}
+#elseif canImport(AppKit)
+import AppKit
+
+public extension NSTextView {
+  func applyStyle() {
+    isRichText = false
+    allowsUndo = true
+  }
+  
+  func applyStyle<Font: FontType>(
+    _ style: TextStyle<Font>,
+    color: NSColor,
+    alignment: NSTextAlignment = .left) {
+      applyStyle()
+      font = style.platformFont
+      textColor = color
+      self.alignment = alignment
       typingAttributes = .attributes(for: style, color: color, alignment: alignment)
     }
 }

@@ -102,6 +102,7 @@ public extension FontType where WeightType: CustomFontWeight {
   }
 }
 
+
 // MARK: - Helpers
 
 private extension FontType {

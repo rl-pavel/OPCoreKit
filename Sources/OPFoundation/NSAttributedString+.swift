@@ -1,6 +1,6 @@
 import Foundation
 
-extension NSAttributedString {
+public extension NSAttributedString {
   typealias Attributes = [NSAttributedString.Key: Any]
   
   convenience init(
