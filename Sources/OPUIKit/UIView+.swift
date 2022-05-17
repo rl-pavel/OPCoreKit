@@ -46,6 +46,24 @@ public extension UIView {
     }
   }
   
+  @discardableResult
+  func transition(
+    _ type: CATransitionType,
+    _ subtype: CATransitionSubtype,
+    withDuration duration: TimeInterval = 0.3,
+    timingFunction: CAMediaTimingFunctionName = .easeInEaseOut,
+    forKey key: String = "transition") -> CATransition {
+    let transition = CATransition()
+    transition.duration = duration
+    transition.type = type
+    transition.subtype = subtype
+    transition.timingFunction = CAMediaTimingFunction(name: timingFunction)
+    
+    layer.add(transition, forKey: key)
+    
+    return transition
+  }
+  
   static var spacer: UIView {
     update(UIView()) {
       $0.isUserInteractionEnabled = false

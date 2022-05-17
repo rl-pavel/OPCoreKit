@@ -25,4 +25,24 @@ public extension CALayer {
         self.borderColor = borderColor.cgColor
       }
     }
+  
+  @discardableResult
+  func transition(
+    _ type: CATransitionType,
+    away subtype: CATransitionSubtype?,
+    for duration: TimeInterval = 0.3,
+    timingFunction: CAMediaTimingFunctionName = .easeInEaseOut,
+    forKey key: String = "transition",
+    completion: VoidClosure? = nil) -> CATransition {
+      let transition = CATransition()
+      transition.duration = duration
+      transition.type = type
+      transition.subtype = subtype
+      transition.timingFunction = CAMediaTimingFunction(name: timingFunction)
+      
+      add(transition, forKey: key)
+      DispatchQueue.main.asyncAfter(deadline: .now() + duration) { completion?() }
+      
+      return transition
+    }
 }
