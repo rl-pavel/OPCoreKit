@@ -21,13 +21,13 @@ public extension FileManager {
         includingPropertiesForKeys: [key, .ubiquitousItemDownloadingStatusKey],
         options: options
       )
-        .sorted {
-          guard let leftDate = $0.resourceValue(forKey: key) as? Date,
-                let rightDate = $1.resourceValue(forKey: key) as? Date else {
-                  return true
-                }
-          
-          return leftDate.compare(rightDate) == (ascending ? .orderedAscending : .orderedDescending)
+      .sorted {
+        guard let leftDate = $0.resourceValue(forKey: key) as? Date,
+              let rightDate = $1.resourceValue(forKey: key) as? Date else {
+          return true
         }
+        
+        return leftDate.compare(rightDate) == (ascending ? .orderedAscending : .orderedDescending)
+      }
     }
 }

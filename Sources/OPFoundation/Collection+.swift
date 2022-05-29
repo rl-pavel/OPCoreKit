@@ -9,24 +9,35 @@ public extension Collection {
     return self
   }
   
-  
+  /// Returns the number of elements of the sequence that satisfy the given predicate.
   func count(where body: (Element) throws -> Bool) rethrows -> Int {
     return try filter(body).count
   }
   
-  /// Lazily returns the first element that can be transformed/mapped to a different type, as that type.
+  /// Lazily returns the first element that can be mapped to a different type, as that type.
+  ///
+  /// `let someView = view.subviews.mapFirst { $0 as? SomeView }`
   func mapFirst<T>(_ transform: (Element) throws -> T?) rethrows -> T? {
     return try lazy.compactMap(transform).first
   }
   
-  /// Perform a side effect for each element in `self`.
+  /// Performs a side effect for each element in `self`. Usable in chained Sequence operations.
+  ///
+  /// Source: https://oleb.net/blog/2017/10/chained-foreach/
+  ///
+  /// ```
+  /// [1, 2, 3]
+  ///   .forEachPerform { print("Initial: \($0)") }
+  ///   .map { $0 * $0 }
+  ///   .forEach { print("Square: \($0)\n") }
+  /// ```
   @discardableResult
   func forEachPerform(_ body: (Element) throws -> ()) rethrows -> Self {
     try forEach(body)
     return self
   }
   
-  /// Perform a side effect, passing through the contents.
+  /// Perform a single side effect, passing through the contents.
   @discardableResult
   func perform(_ body: (Self) throws -> ()) rethrows -> Self {
     try body(self)
@@ -36,12 +47,14 @@ public extension Collection {
 
 
 public extension Collection where Element: OptionalType {
+  /// Returns an array containing the non-`nil` elements.
   func compact() -> [Element.Wrapped] {
     compactMap { $0.optional }
   }
 }
 
 public extension Collection where Element: Collection {
+  /// Flattens a nested collection into a single array.
   func flatten() -> [Element.Element] {
     flatMap { $0 }
   }

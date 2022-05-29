@@ -1,7 +1,7 @@
 import Foundation
 
 public extension Array {
-  /// Creates pairs of arrays with a specified count of elements.
+  /// Creates sub-arrays with a specified count of elements.
   ///
   /// Example:
   /// ```
@@ -16,6 +16,14 @@ public extension Array {
     }
   }
   
+  /// Creates sub-arrays with a specified count of elements, and iterates over the sub-arrays.
+  ///
+  /// Example:
+  /// ```
+  /// [1, 2, 3, 4].forEachPair(of: 2) {
+  ///   print($0) // "[1, 2]", "[2, 3]", "[3, 4]"
+  /// }
+  /// ```
   func forEachPair(of pairCount: Int, perform: ([Element]) throws -> Void) rethrows {
     try makePairs(of: pairCount).forEach(perform)
   }

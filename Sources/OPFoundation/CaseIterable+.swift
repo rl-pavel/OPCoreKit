@@ -1,5 +1,6 @@
 import Foundation
 
+/// This extension adds functionality for `CaseIterable` String enums to be convertible to/from Int.
 public extension CaseIterable where Self: Equatable, Self: RawRepresentable,
                                     RawValue == String, AllCases.Index == Int {
   init?(intValue: Int) {

@@ -2,9 +2,8 @@
 ///
 /// Example:
 /// ```
-/// let label = Init(UILabel()) {
+/// let label = update(UILabel()) {
 ///   $0.text = ...
-///   $0.textColor = ...
 /// }
 /// ```
 public func update<Type>(_ object: Type, _ update: Closure<Type>) -> Type {
@@ -16,7 +15,7 @@ public func update<Type>(_ object: Type, _ update: Closure<Type>) -> Type {
 ///
 /// Example:
 /// ```
-/// let collectionView: UICollectionView = MapInit(UICollectionViewFlowLayout()) {
+/// let collectionView: UICollectionView = transform(UICollectionViewFlowLayout()) {
 ///   $0.minimumLineSpacing = ...
 ///   return UICollectionView(frame: .zero, collectionViewLayout: $0)
 /// }

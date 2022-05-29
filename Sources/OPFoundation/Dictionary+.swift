@@ -10,6 +10,7 @@ public extension Dictionary {
     return prettyString
   }
   
+  /// Creates a dictionary by merging the given dictionary into this dictionary.
   func merging(_ other: [Key: Value], keepingOldValue: Bool = false) -> [Key: Value] {
     self.merging(other) { oldValue, newValue in
       keepingOldValue ? oldValue : newValue

@@ -18,10 +18,16 @@ public extension Date {
       return calendar.dateComponents(Set(components), from: self, to: otherDate)
     }
   
+  /// Returns whether the date's component is same as another date.
+  ///
+  /// `Date().isSame(.day, as: Date())`
   func isSame(_ granularity: Calendar.Component, as other: Date, calendar: Calendar = .current) -> Bool {
     return calendar.compare(self, to: other, toGranularity: granularity) == .orderedSame
   }
   
+  /// Returns whether the date's component is within the specified range to the current date.
+  ///
+  /// `Date().isWithinLast(5, .day)`
   func isWithinLast(_ value: Int, _ component: Calendar.Component, calendar: Calendar = .current) -> Bool {
     guard let comparisonDate = Date().advancing(component, by: -value, calendar: calendar) else {
       return false
@@ -29,6 +35,9 @@ public extension Date {
     return self >? comparisonDate
   }
   
+  /// Returns the count of a specified component to another date.
+  ///
+  /// `Date().number(of: .day, until: Date())`
   func number(of component: Calendar.Component, until nextDate: Date, in calendar: Calendar = .current) -> Int {
     let number = calendar.dateComponents([component], from: self, to: nextDate)
     return number.value(for: component) ?? 0
@@ -39,6 +48,9 @@ public extension Date {
 // MARK: - Formatting
 
 public extension Date {
+  /// Formats the date using the specified set of localized date format components.
+  ///
+  /// `Date().format(with: [.weekdayShort, .hour, .minute]) // "Sat 13:00" or "Sat 1:00 PM", etc.
   func format(
     with components: [DateFormatComponents],
     in timeZone: TimeZone? = .current,

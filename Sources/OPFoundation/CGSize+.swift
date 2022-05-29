@@ -1,6 +1,7 @@
 import CoreGraphics
 
 public extension CGSize {
+  /// Creates a `CGSize` with the same specified width and height.
   init(_ size: CGFloat) {
     self.init(width: size, height: size)
   }
@@ -8,6 +9,8 @@ public extension CGSize {
   static let infinity: CGSize = .init(CGFloat.infinity)
 }
 
+/// This extension allows `CGSize` to be expressible by integer literals
+/// to create a `CGSize` with the same specified width and height: `CGSize(16)`
 extension CGSize: ExpressibleByIntegerLiteral {
   public init(integerLiteral value: Int) {
     let size = CGFloat(value)
@@ -15,7 +18,7 @@ extension CGSize: ExpressibleByIntegerLiteral {
   }
 }
 
-// This conformance makes it possible to use the Numeric spacing extensions, like .x16.
+/// This extension adds `Numeric` and math functionality to `CGSize`.
 extension CGSize: Numeric {
   public var magnitude: CGFloat {
     fatalError("Magnitude cannot be used on CGSize.")

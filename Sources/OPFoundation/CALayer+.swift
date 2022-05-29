@@ -9,23 +9,21 @@ public extension CACornerMask {
 }
 
 public extension CALayer {
-  func roundCorners(
-    _ corners: CACornerMask,
-    radius: CGFloat,
-    cornerCurve: CALayerCornerCurve = .continuous,
-    borderWidth: CGFloat = 0,
-    borderColor: PlatformColor = .clear) {
-      cornerRadius = radius
-      maskedCorners = corners
-      self.cornerCurve = cornerCurve
-      masksToBounds = true
-      
-      if borderWidth > 0 {
-        self.borderWidth = borderWidth
-        self.borderColor = borderColor.cgColor
-      }
-    }
+  /// Rounds the specified corners.
+  func roundCorners(_ corners: CACornerMask, radius: CGFloat, cornerCurve: CALayerCornerCurve = .continuous) {
+    cornerRadius = radius
+    maskedCorners = corners
+    self.cornerCurve = cornerCurve
+    masksToBounds = true
+  }
   
+  /// Draws a border with the specified width and color.
+  func drawBorder(width: CGFloat, color: PlatformColor) {
+    borderWidth = width
+    borderColor = color.cgColor
+  }
+  
+  /// Adds a `CATransition` animation to the layer.
   @discardableResult
   func transition(
     _ type: CATransitionType,

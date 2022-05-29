@@ -1,7 +1,15 @@
 import Foundation
 
+/// A type that can convert itself into and out of an external representation's single value.
+///
+/// Example:
+/// ```
+/// struct VehicleType: SingleValueCodable {
+///   let value: String
+///   static let convertible: VehicleType = .init(value: "convertible")
+/// }
+/// ```
 public typealias SingleValueCodable = SingleValueEncodable & SingleValueDecodable
-
 
 // MARK: - Encodable
 
