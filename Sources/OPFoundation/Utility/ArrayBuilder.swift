@@ -1,7 +1,7 @@
 /// Allows creation of SwiftUI-style arrays using a closure. Watch this
 /// [WWDC session](https://developer.apple.com/videos/play/wwdc2021/10253/) showing how this works.
 ///
-/// `init(@ArrayBuilder<Int> build: Factory<Int>)`
+/// `init(@ArrayBuilder<Int> build: () -> (Int))`
 /// ```
 /// .init {
 ///   1
