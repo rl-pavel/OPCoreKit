@@ -8,7 +8,3 @@ public struct Backport<Content> {
     self.content = content
   }
 }
-
-public extension View {
-  var backport: Backport<Self> { Backport(self) }
-}
