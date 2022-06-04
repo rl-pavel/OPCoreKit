@@ -1,7 +1,18 @@
 import OPFoundation
 import SwiftUI
 
-/// A type that defines a set of text styles used in the app.
+/// Defines a text style for any `FontType`. A text style combines the `TypeStyle` (matching
+/// Apple's dynamic type styles), a `Font.WeightType` for the given font, `lineHeight` and `tracking`.
+///
+/// This struct is intended to be used for creating `static` properties with the various font styles as extensions.
+/// Example:
+/// ```
+/// extension TextStyle {
+///   static var headline: TextStyle<CustomFont> {
+///     .init(style: .headline, weight: .heavy, lineHeight: 0, tracking: 0)
+///   }
+/// }
+/// ```
 public struct TextStyle<Font: FontType> {
   private let fontType: Font
 
@@ -99,7 +110,9 @@ public extension UITextView {
       typingAttributes = .attributes(for: style, color: color, alignment: alignment)
     }
 }
+
 #elseif canImport(AppKit)
+// MARK: - AppKit Styling
 import AppKit
 
 public extension NSTextView {
@@ -149,27 +162,27 @@ public extension Text {
 }
 
 public extension View {
-  /// ⚠️ This extension will not apply the tracking/line spacing, consider using `Text` styling directly.
+  /// ⚠️ This extension will not apply `tracking` and `lineHeight`, consider using `Text.applyStyle` directly.
   @_disfavoredOverload
   func applyStyle<Font: FontType>(_ style: TextStyle<Font>) -> some View {
     return self.font(style.font)
   }
   
-  /// ⚠️ This extension will not apply the tracking/line spacing, consider using `Text` styling directly.
+  /// ⚠️ This extension will not apply `tracking` and `lineHeight`, consider using `Text.applyStyle` directly.
   @_disfavoredOverload
   func applyStyle<Font: FontType>(_ style: TextStyle<Font>, color: Color) -> some View {
     return applyStyle(style)
       .foregroundColor(color)
   }
   
-  /// ⚠️ This extension will not apply the tracking/line spacing, consider using `Text` styling directly.
+  /// ⚠️ This extension will not apply `tracking` and `lineHeight`, consider using `Text.applyStyle` directly.
   @_disfavoredOverload
   func applyStyle<Font: FontType>(_ style: TextStyle<Font>, alignment: TextAlignment) -> some View {
     return applyStyle(style)
       .multilineTextAlignment(alignment)
   }
   
-  /// ⚠️ This extension will not apply the tracking/line spacing, consider using `Text` styling directly.
+  /// ⚠️ This extension will not apply `tracking` and `lineHeight`, consider using `Text.applyStyle` directly.
   @_disfavoredOverload
   func applyStyle<Font: FontType>(
     _ style: TextStyle<Font>,
@@ -182,20 +195,6 @@ public extension View {
 
 
 // MARK: - NSAttributedString Styling
-
-fileprivate extension NSMutableParagraphStyle {
-  convenience init<Font: FontType>(style: TextStyle<Font>) {
-    self.init()
-    self.lineSpacing = style.lineHeight
-  }
-  
-  convenience init<Font: FontType>(style: TextStyle<Font>, alignment: NSTextAlignment) {
-    self.init()
-    
-    self.lineSpacing = style.lineHeight
-    self.alignment = alignment
-  }
-}
 
 public extension Dictionary where Key == NSAttributedString.Key, Value: Any {
   static func attributes<Font: FontType>(for style: TextStyle<Font>) -> [NSAttributedString.Key: Any] {
@@ -255,7 +254,7 @@ public extension NSAttributedString {
   }
 }
 
-extension NSMutableAttributedString {
+public extension NSMutableAttributedString {
   func applyStyle<Font: FontType>(_ style: TextStyle<Font>, to range: NSRange? = nil) {
     addAttributes(
       .attributes(for: style),
@@ -286,5 +285,22 @@ extension NSMutableAttributedString {
         .attributes(for: style, color: color, alignment: alignment),
         range: range ?? NSRange(location: 0, length: string.count)
       )
+  }
+}
+
+
+// MARK: - Helpers
+
+extension NSMutableParagraphStyle {
+  convenience init<Font: FontType>(style: TextStyle<Font>) {
+    self.init()
+    self.lineSpacing = style.lineHeight
+  }
+  
+  convenience init<Font: FontType>(style: TextStyle<Font>, alignment: NSTextAlignment) {
+    self.init()
+    
+    self.lineSpacing = style.lineHeight
+    self.alignment = alignment
   }
 }
