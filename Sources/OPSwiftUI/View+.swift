@@ -37,7 +37,7 @@ public extension View {
     }
   
   func frame(size: CGSize?, alignment: Alignment = .center) -> some View {
-    return frame(width: size?.width, height: size?.height, alignment: alignment)
+    frame(width: size?.width, height: size?.height, alignment: alignment)
   }
   
   func frame(
@@ -45,7 +45,7 @@ public extension View {
     idealSize: CGSize? = nil,
     maxSize: CGSize? = nil,
     alignment: Alignment = .center) -> some View {
-      return frame(
+      frame(
         minWidth: minSize?.width,
         idealWidth: idealSize?.width,
         maxWidth: maxSize?.width,
@@ -57,6 +57,18 @@ public extension View {
   
   func overlayMask<Content: View>(_ content: Content) -> some View {
     overlay(content.mask(self))
+  }
+  
+  func hiddenShortcut(
+    _ key: KeyEquivalent,
+    modifiers: EventModifiers = [],
+    title: String = "",
+    action: @escaping VoidClosure) -> some View {
+      background(
+        Button(title, action: action)
+          .keyboardShortcut(key, modifiers: modifiers)
+          .hidden()
+      )
   }
   
 #if DEBUG
