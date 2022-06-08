@@ -79,11 +79,13 @@ private extension PlatformView {
 
 private struct IntrospectView: UniversalViewRepresentable {
   class TagView: PlatformView {
+#if os(macOS)
     var actualTag: Int = 0
     override var tag: Int {
       get { actualTag }
       set { actualTag = newValue }
     }
+#endif
   }
   
   var tag: Int
