@@ -43,20 +43,26 @@ public extension Collection {
     try body(self)
     return self
   }
-}
-
-
-public extension Collection where Element: OptionalType {
+  
+  
+  // Conditionals
+  
   /// Returns an array containing the non-`nil` elements.
-  func compact() -> [Element.Wrapped] {
+  func compact() -> [Element.Wrapped] where Element: OptionalType {
     compactMap { $0.optional }
   }
-}
-
-public extension Collection where Element: Collection {
+  
   /// Flattens a nested collection into a single array.
-  func flatten() -> [Element.Element] {
+  func flatten() -> [Element.Element] where Element: Collection {
     flatMap { $0 }
+  }
+  
+  func first(with id: Element.ID) -> Element? where Element: Identifiable {
+    self.first(where: { $0.id == id })
+  }
+  
+  func firstIndex(with id: Element.ID) -> Index? where Element: Identifiable {
+    self.firstIndex(where: { $0.id == id })
   }
 }
 
@@ -68,6 +74,14 @@ public extension RandomAccessCollection {
       return nil
     }
     return self[index]
+  }
+  
+  func last(with id: Element.ID) -> Element? where Element: Identifiable {
+    self.last(where: { $0.id == id })
+  }
+  
+  func lastIndex(with id: Element.ID) -> Index? where Element: Identifiable {
+    self.lastIndex(where: { $0.id == id })
   }
 }
 
