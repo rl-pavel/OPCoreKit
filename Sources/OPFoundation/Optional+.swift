@@ -29,7 +29,7 @@ extension Optional: AnyOptional {
   }
 }
 
-extension Optional where Wrapped: Collection {
+public extension Optional where Wrapped: Collection {
   var isNilOrEmpty: Bool {
     return self?.isEmpty ?? true
   }
@@ -52,9 +52,9 @@ infix operator <=? : NilCoalescingPrecedence
 infix operator !=? : NilCoalescingPrecedence
 infix operator ==? : NilCoalescingPrecedence
 
-extension Optional where Wrapped: Comparable {
+public extension Optional where Wrapped: Comparable {
   /// Unwraps both sides, returning `false` if either is `nil`, then performs the comparison check.
-  public static func >? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
+  static func >? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
     guard let lhs = lhs, let rhs = rhs else {
       return false
     }
@@ -63,7 +63,7 @@ extension Optional where Wrapped: Comparable {
   }
   
   /// Unwraps both sides, returning `false` if either is `nil`, then performs the comparison check.
-  public static func >=? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
+  static func >=? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
     guard let lhs = lhs, let rhs = rhs else {
       return false
     }
@@ -72,7 +72,7 @@ extension Optional where Wrapped: Comparable {
   }
   
   /// Unwraps both sides, returning `false` if either is `nil`, then performs the comparison check.
-  public static func <? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
+  static func <? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
     guard let lhs = lhs, let rhs = rhs else {
       return false
     }
@@ -81,7 +81,7 @@ extension Optional where Wrapped: Comparable {
   }
   
   /// Unwraps both sides, returning `false` if either is `nil`, then performs the comparison check.
-  public static func <=? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
+  static func <=? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
     guard let lhs = lhs, let rhs = rhs else {
       return false
     }
@@ -90,9 +90,9 @@ extension Optional where Wrapped: Comparable {
   }
 }
 
-extension Optional where Wrapped: Equatable {
+public extension Optional where Wrapped: Equatable {
   /// Unwraps both sides, returning `false` if either is `nil`, then performs the equation check.
-  public static func !=? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
+  static func !=? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
     guard let lhs = lhs, let rhs = rhs else {
       return false
     }
@@ -101,7 +101,7 @@ extension Optional where Wrapped: Equatable {
   }
   
   /// Unwraps both sides, returning `false` if either is `nil`, then performs the equation check.
-  public static func ==? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
+  static func ==? (lhs: Wrapped?, rhs: Wrapped?) -> Bool {
     guard let lhs = lhs, let rhs = rhs else {
       return false
     }
