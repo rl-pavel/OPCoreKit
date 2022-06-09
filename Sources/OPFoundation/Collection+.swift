@@ -114,4 +114,8 @@ public extension RangeReplaceableCollection {
     copy.append(element)
     return copy
   }
+  
+  mutating func removeAll(with id: Element.ID) where Element: Identifiable {
+    self.removeAll(where: { $0.id == id })
+  }
 }
