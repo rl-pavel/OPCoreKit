@@ -193,6 +193,38 @@ public extension TextField {
   }
 }
 
+public extension TextEditor {
+  func applyStyle<Font: FontType>(_ style: TextStyle<Font>) -> some View {
+    Group {
+      if #available(macOS 13.0, iOS 16.0, *) {
+        self
+          .font(style.font)
+          .tracking(style.tracking)
+          .lineSpacing(style.lineHeight)
+      } else {
+        self
+          .font(style.font)
+          .lineSpacing(style.lineHeight)
+      }
+    }
+  }
+  
+  func applyStyle<Font: FontType>(_ style: TextStyle<Font>, color: Color) -> some View {
+    return applyStyle(style)
+      .foregroundColor(color)
+  }
+  
+  func applyStyle<Font: FontType>(_ style: TextStyle<Font>, alignment: TextAlignment) -> some View {
+    return applyStyle(style)
+      .multilineTextAlignment(alignment)
+  }
+  
+  func applyStyle<Font: FontType>(_ style: TextStyle<Font>, color: Color, alignment: TextAlignment) -> some View {
+    return applyStyle(style, color: color)
+      .multilineTextAlignment(alignment)
+  }
+}
+
 public extension View {
   /// ⚠️ This extension will not apply `tracking` and `lineHeight`, consider using `Text.applyStyle` directly.
   @_disfavoredOverload
