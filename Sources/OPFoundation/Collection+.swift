@@ -56,32 +56,13 @@ public extension Collection {
   func flatten() -> [Element.Element] where Element: Collection {
     flatMap { $0 }
   }
-  
-  func first(with id: Element.ID) -> Element? where Element: Identifiable {
-    self.first(where: { $0.id == id })
-  }
-  
-  func firstIndex(with id: Element.ID) -> Index? where Element: Identifiable {
-    self.firstIndex(where: { $0.id == id })
-  }
 }
 
 
 public extension RandomAccessCollection {
   /// Returns the element at specified index if it's within bounds, otherwise nil.
   subscript(safe index: Index) -> Element? {
-    guard index >= startIndex, index < endIndex else {
-      return nil
-    }
-    return self[index]
-  }
-  
-  func last(with id: Element.ID) -> Element? where Element: Identifiable {
-    self.last(where: { $0.id == id })
-  }
-  
-  func lastIndex(with id: Element.ID) -> Index? where Element: Identifiable {
-    self.lastIndex(where: { $0.id == id })
+    indices.contains(index) ? self[index] : nil
   }
 }
 
@@ -113,9 +94,5 @@ public extension RangeReplaceableCollection {
     var copy = self
     copy.append(element)
     return copy
-  }
-  
-  mutating func removeAll(with id: Element.ID) where Element: Identifiable {
-    self.removeAll(where: { $0.id == id })
   }
 }
