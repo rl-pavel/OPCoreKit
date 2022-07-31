@@ -3,11 +3,14 @@ import Foundation
 public typealias Memoize<Input: Hashable, Output> = Transform<Input, Output>
 public typealias RecursiveMemoize<Input: Hashable, Output> = Transform<(Memoize<Input, Output>, Input), Output>
 
-/// Example:
+/// Creates a closure that (internally) caches the outputs from given inputs in a dictionary.
 ///
-/// let memoizedSqrt: Memoize<Double, Double> = memoize(sqrt)
+/// Example:
+/// ```
+/// let memoizedSqrt: Memoize<Double, Double> = memoized(sqrt)
 /// memoizedSin(121)
-public func memoize<Input: Hashable, Output>(_ transform: @escaping Transform<Input, Output>) -> Memoize<Input, Output> {
+/// ```
+public func memoized<Input: Hashable, Output>(_ transform: @escaping Memoize<Input, Output>) -> Memoize<Input, Output> {
   var storage: [Input: Output] = [:]
   
   return { input in
@@ -21,13 +24,17 @@ public func memoize<Input: Hashable, Output>(_ transform: @escaping Transform<In
   }
 }
 
-/// Example:
+/// Creates a closure that (internally) caches the outputs from given inputs in a dictionary.
+/// The `transform` closure returns the function to perform the recursive calculation and the input.
 ///
-/// let memoizedFibonacci: RecursiveMemoize<Int, Int> = recursiveMemoize { fibonacci, number in
+/// Example:
+/// ```
+/// let memoizedFibonacci: Memoize<Int, Int> = recursiveMemoized { fibonacci, number in
 ///   number < 2 ? number : fibonacci(number - 1) + fibonacci(number - 2)
 /// }
-public func recursiveMemoize<Input: Hashable, Output>(
-  _ transform: @escaping Transform<(Transform<Input, Output>, Input), Output>
+/// ```
+public func recursiveMemoized<Input: Hashable, Output>(
+  _ transform: @escaping RecursiveMemoize<Input, Output>
 ) -> Memoize<Input, Output> {
   var storage: [Input: Output] = [:]
   var memoizer: Transform<Input, Output>!
