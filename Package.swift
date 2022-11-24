@@ -3,15 +3,21 @@ import PackageDescription
 
 // MARK: - Package
 
+let OPFoundation: BuildItem = .init(name: "OPFoundation")
+let OPCombine: BuildItem = .init(name: "OPCombine")
+let OPTypography: BuildItem = .init(name: "OPTypography", dependencies: [OPFoundation])
+let OPSwiftUI: BuildItem = .init(name: "OPSwiftUI", dependencies: [OPFoundation])
+let OPUIKit: BuildItem = .init(name: "OPUIKit")
+
 let items: [BuildItem] = [
-  .init(name: "OPFoundation"), .init(name: "OPCombine"),
-  .init(name: "OPTypography"), .init(name: "OPSwiftUI"),
-  .init(name: "OPUIKit")
+  OPFoundation, OPCombine,
+  OPTypography, OPSwiftUI,
+  OPUIKit
 ]
 
 let package = Package(
   name: "OPCore",
-  platforms: [.iOS(.v14), .macOS(.v12)],
+  platforms: [.iOS(.v15), .macOS(.v12)],
   products: items.map(\.library),
   targets: items.map(\.target)
 )
