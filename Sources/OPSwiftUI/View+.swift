@@ -71,6 +71,14 @@ public extension View {
       )
   }
   
+  func synchronize<Value>(
+    _ binding: Binding<Value>,
+    with focusState: FocusState<Value>.Binding) -> some View {
+      self
+        .onChange(of: binding.wrappedValue) { focusState.wrappedValue = $0 }
+        .onChange(of: focusState.wrappedValue) { binding.wrappedValue = $0 }
+    }
+  
 #if DEBUG
   /// Adds a colored overlay showing the size of the view for debugging purposes.
   func debugSizeOverlay(color: Color = .red) -> some View {
