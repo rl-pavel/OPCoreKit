@@ -1,4 +1,6 @@
 import OPFoundation
+import PlatformKit
+import SwiftUI
 
 // Credit: https://gist.github.com/IanKeen/abb807d72c5843fb0f4c3ab10804b9f7
 extension View {

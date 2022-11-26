@@ -1,5 +1,6 @@
 import OPFoundation
 import SwiftUI
+import PlatformKit
 
 /// Defines a text style for any `FontType`. A text style combines the `TypeStyle` (matching
 /// Apple's dynamic type styles), a `Font.WeightType` for the given font, `lineHeight` and `tracking`.

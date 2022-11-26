@@ -1,4 +1,5 @@
 import OPFoundation
+import PlatformKit
 import SwiftUI
 
 public extension Text {

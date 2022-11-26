@@ -1,4 +1,5 @@
 import OPFoundation
+import PlatformKit
 import SwiftUI
 
 /// A protocol that defines a font, which can be used to create weighted Dynamic Type text styles.
