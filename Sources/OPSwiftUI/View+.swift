@@ -59,6 +59,19 @@ public extension View {
     overlay(content.mask(self))
   }
   
+  /// Applies a mask going from opaque to transparent.
+  func fadeMask(startPoint: UnitPoint = .top, endPoint: UnitPoint = .bottom) -> some View {
+    mask(
+      LinearGradient(
+        colors: [.black, .clear],
+        startPoint: startPoint,
+        endPoint: endPoint
+      )
+        .edgesIgnoringSafeArea(.all)
+        .allowsHitTesting(false)
+    )
+  }
+  
   func hiddenShortcut(
     _ key: KeyEquivalent,
     modifiers: EventModifiers = [],
