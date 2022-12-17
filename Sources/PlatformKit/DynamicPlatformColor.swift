@@ -22,6 +22,7 @@ public extension UIColor {
 }
 
 public extension Color {
+  @_disfavoredOverload
   init(platformColor: PlatformColor) {
     self.init(uiColor: platformColor)
   }
@@ -50,6 +51,7 @@ public extension NSColor {
 }
 
 public extension Color {
+  @_disfavoredOverload
   init(platformColor: PlatformColor) {
     self.init(nsColor: platformColor)
   }
@@ -62,6 +64,10 @@ public extension Color {
 public extension PlatformColor {
   convenience init(hex: Int, alpha: CGFloat = 1.0) {
     self.init(red: (hex >> 16) & 0xFF, green: (hex >> 8) & 0xFF, blue: hex & 0xFF, alpha: alpha)
+  }
+  
+  convenience init(greyScale: CGFloat, alpha: CGFloat = 1.0) {
+    self.init(red: greyScale, green: greyScale, blue: greyScale, alpha: alpha)
   }
   
   convenience init(hexString: String, alpha: CGFloat = 1.0) {
