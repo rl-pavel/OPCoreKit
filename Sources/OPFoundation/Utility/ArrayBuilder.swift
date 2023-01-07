@@ -17,35 +17,68 @@
 /// }
 /// ```
 @resultBuilder
-enum ArrayBuilder<Element> {
-  typealias Expression = Element
-  typealias Component = [Element]
+public enum ArrayBuilder<Element> {
+  public typealias Expression = Element
+  public typealias Component = [Element]
   
-  static func buildExpression(_ expression: Expression) -> Component {
+  // General
+  public static func buildPartialBlock(first: Never) -> Component { }
+  public static func buildBlock() -> [Element] {
+    []
+  }
+  public static func buildExpression(_ expression: Expression) -> Component {
     [expression]
   }
-  
-  static func buildExpression(_ expression: Expression?) -> Component {
+  public static func buildBlock(_ component: Component) -> Component {
+    component
+  }
+
+  // Optionals
+  public static func buildOptional(_ children: Component?) -> Component {
+    children ?? []
+  }
+  public static func buildExpression(_ expression: Expression?) -> Component {
     expression.map { [$0] } ?? []
   }
   
-  static func buildBlock(_ children: Component...) -> Component {
+  // Logic
+  public static func buildIf(_ element: Component?) -> Component {
+    element ?? []
+  }
+  public static func buildEither(first child: Component) -> Component {
+    child
+  }
+  public static func buildEither(second child: Component) -> Component {
+    child
+  }
+  public static func buildPartialBlock(first: Void) -> Component {
+    []
+  }
+  public static func buildPartialBlock(first: Expression) -> Component {
+    [first]
+  }
+  public static func buildPartialBlock(first: Component) -> Component {
+    first
+  }
+  
+  
+  // Loops
+  public static func buildArray(_ components: [Component]) -> Component {
+    components.flatMap { $0 }
+  }
+  public static func buildBlock(_ children: Component...) -> Component {
     children.flatMap { $0 }
   }
-  
-  static func buildOptional(_ children: Component?) -> Component {
-    children ?? []
+  public static func buildPartialBlock(accumulated: Component, next: Expression) -> Component {
+    accumulated + [next]
   }
-  
-  static func buildBlock(_ component: Component) -> Component {
-    component
+  public static func buildPartialBlock(accumulated: Component, next: Component) -> Component {
+    accumulated + next
   }
-  
-  static func buildEither(first child: Component) -> Component {
-    child
-  }
-  
-  static func buildEither(second child: Component) -> Component {
-    child
+}
+
+public extension Array {
+  init(@ArrayBuilder<Element> makeItems: Factory<[Element]>) {
+    self.init(makeItems())
   }
 }
