@@ -14,10 +14,15 @@ extension View {
         .frame(width: 0, height: 0)
         .onAppear {
           DispatchQueue.main.async {
-            let keyWindow = PlatformApplication.shared.windows.first(where: \.isKeyWindow)
 #if os(iOS)
+            let keyWindow = UIApplication.shared.connectedScenes
+              .filter { $0.activationState == .foregroundActive }
+              .mapFirst { $0 as? UIWindowScene }?
+              .windows
+              .first(where: \.isKeyWindow)
             let root = keyWindow?.viewWithTag(tag)
 #elseif os(macOS)
+            let keyWindow = NSApplication.shared.windows.first(where: \.isKeyWindow)
             let root = keyWindow?.contentView?.viewWithTag(tag)
 #endif
             

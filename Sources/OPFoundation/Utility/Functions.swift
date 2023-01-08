@@ -34,7 +34,7 @@ public func transform<Type, Result>(_ object: Type, _ transform: Transform<Type,
 /// let initial = Foo(value: "initial")
 /// let updated = updateCopy(of: initial) { $0.value = "updated" } // Foo(value: "updated")
 /// ```
-public func updateCopy<Value>(of value: Value, _ updates: InoutClosure<Value>) -> Value {
+public func updatedCopy<Value>(of value: Value, _ updates: InoutClosure<Value>) -> Value {
   var copy = value
   updates(&copy)
   return copy
