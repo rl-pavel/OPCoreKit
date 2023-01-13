@@ -1,4 +1,3 @@
-import OPFoundation
 import SwiftUI
 
 public extension View {
