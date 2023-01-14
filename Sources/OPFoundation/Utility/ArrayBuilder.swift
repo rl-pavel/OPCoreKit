@@ -1,20 +1,28 @@
 /// Allows creation of SwiftUI-style arrays using a closure. Watch this
-/// [WWDC session](https://developer.apple.com/videos/play/wwdc2021/10253/) showing how this works.
+/// [WWDC session](https://developer.apple.com/videos/play/wwdc2021/10253/) showing how it works.
 ///
-/// `init(@ArrayBuilder<Int> build: () -> (Int))`
 /// ```
-/// .init {
-///   1
-///   2
-///   // Either `3` or `4`.
-///   if Bool.random() {
-///     3
-///   } else {
-///     4
+/// Array<String> {
+///   "1"
+///   "2"
+///   let trueCondition = true || Bool.random()
+///   if trueCondition {
+///     "maybe 3"
 ///   }
-///   Optional<Int>.none // nil.
-///   Optional<Int>.some(5) // unwrapped `5`.
+///   let falseCondition = false && Bool.random()
+///   if falseCondition {
+///     "maybe 4"
+///   }
+///   for i in (5...7) {
+///     "loop \(i)"
+///   }
+///   Optional<String>.none
+///   Optional<String>.some("unwrapped 8")
 /// }
+/// ```
+/// Result:
+/// ```
+/// ["1", "2", "maybe 3", "loop 5", "loop 6", "loop 7", "unwrapped 8"]
 /// ```
 @resultBuilder
 public enum ArrayBuilder<Element> {
