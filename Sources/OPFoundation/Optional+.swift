@@ -11,22 +11,9 @@ extension Optional: OptionalType {
     mutating set { self = newValue }
   }
 }
-
-/// A type-erased, non-generic optional protocol. Can be used for casting `as? AnyOptional`.
-public protocol AnyOptional {
-  var isNil: Bool { get set }
-  var isNotNil: Bool { get set }
-}
-extension Optional: AnyOptional {
-  public var isNil: Bool {
-    get { self == nil }
-    mutating set { self = newValue ? nil : self }
-  }
-  
-  public var isNotNil: Bool {
-    get { self != nil }
-    mutating set { self = newValue ? self : nil }
-  }
+extension OptionalType {
+    public var isNil: Bool { optional == nil }
+    public var isNotNil: Bool { optional != nil }
 }
 
 public extension Optional where Wrapped: Collection {

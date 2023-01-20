@@ -1,8 +1,8 @@
 import SwiftUI
 
 public extension EdgeInsets {
-  init(edges: CGFloat) {
-    self = .init(top: edges, leading: edges, bottom: edges, trailing: edges)
+  init(all: CGFloat) {
+    self = .init(top: all, leading: all, bottom: all, trailing: all)
   }
   
   init(vertical: CGFloat = 0, horizontal: CGFloat = 0) {
@@ -26,5 +26,5 @@ public extension EdgeInsets {
     return resultInsets
   }
   
-  static var zero: EdgeInsets { .init(edges: 0) }
+  static let zero: EdgeInsets = .init(all: 0)
 }

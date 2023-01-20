@@ -1,21 +1,24 @@
 import CoreGraphics
 
 public extension CGSize {
-  /// Creates a `CGSize` with the same specified width and height.
-  init(_ size: CGFloat) {
-    self.init(width: size, height: size)
-  }
-  
-  static let infinity: CGSize = .init(CGFloat.infinity)
+    /// Creates a `CGSize` with the equal width and height.
+    init(_ square: CGFloat) {
+        self.init(width: square, height: square)
+    }
+
+    /// A `CGSize` with `.infinity` width and height. Useful for SwiftUI `frame` modifiers.
+    static let infinity: CGSize = .init(CGFloat.infinity)
 }
 
-/// This extension allows `CGSize` to be expressible by integer literals
-/// to create a `CGSize` with the same specified width and height: `CGSize(16)`
+/// These extensions allow `CGSize` to be expressible by integer literals
+/// to more easily create square sizes.
+///
+/// Example: `Color.red.frame(size: 50)`
 extension CGSize: ExpressibleByIntegerLiteral {
-  public init(integerLiteral value: Int) {
-    let size = CGFloat(value)
-    self.init(size)
-  }
+    public init(integerLiteral value: Int) {
+        let size = CGFloat(value)
+        self.init(size)
+    }
 }
 
 /// This extension adds `Numeric` and math functionality to `CGSize`.
