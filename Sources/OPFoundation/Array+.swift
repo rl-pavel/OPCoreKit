@@ -27,4 +27,10 @@ public extension Array {
   func forEachPair(of pairCount: Int, perform: ([Element]) throws -> Void) rethrows {
     try makePairs(of: pairCount).forEach(perform)
   }
+
+  func chunked(into size: Int) -> [[Element]] {
+    stride(from: 0, to: count, by: size).map {
+      Array(self[$0 ..< Swift.min($0 + size, count)])
+    }
+  }
 }
