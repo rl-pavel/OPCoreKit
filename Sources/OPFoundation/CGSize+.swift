@@ -21,39 +21,98 @@ extension CGSize: ExpressibleByIntegerLiteral {
     }
 }
 
-/// This extension adds `Numeric` and math functionality to `CGSize`.
-extension CGSize: Numeric {
-  public var magnitude: CGFloat {
-    fatalError("Magnitude cannot be used on CGSize.")
-  }
+public extension CGSize {
+  // MARK: - Addition (+CGSize, +CGFloat, +=inout)
   
-  public init?<T: BinaryInteger>(exactly source: T) {
-    self.init(CGFloat(source))
-  }
-  
-  public static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
+  static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
     CGSize(
       width: lhs.width + rhs.width,
       height: lhs.height + rhs.height
     )
   }
+  static func + (lhs: CGSize, rhs: CGFloat) -> CGSize {
+    CGSize(
+      width: lhs.width + rhs,
+      height: lhs.height + rhs
+    )
+  }
+  static func += (lhs: inout CGSize, rhs: CGSize) {
+    lhs.width += rhs.width
+    lhs.height += rhs.height
+  }
   
-  public static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
+  
+  // MARK: - Subtraction (-CGSize, -CGFloat, -=inout, negative)
+  
+  static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
     CGSize(
       width: lhs.width - rhs.width,
       height: lhs.height - rhs.height
     )
   }
+  static func - (lhs: CGSize, rhs: CGFloat) -> CGSize {
+    CGSize(
+      width: lhs.width - rhs,
+      height: lhs.height - rhs
+    )
+  }
+  static func -= (lhs: inout CGSize, rhs: CGSize) {
+    lhs.width -= rhs.width
+    lhs.height -= rhs.height
+  }
+  static prefix func - (size: CGSize) -> CGSize {
+    .init(width: -size.width, height: -size.height)
+  }
   
-  public static func * (lhs: CGSize, rhs: CGSize) -> CGSize {
+  
+  // MARK: - Multiplication (*CGSize, *CGFloat, *=inout)
+  
+  static func * (lhs: CGSize, rhs: CGSize) -> CGSize {
     CGSize(
       width: lhs.width * rhs.width,
       height: lhs.height * rhs.height
     )
   }
-  
-  public static func *= (lhs: inout CGSize, rhs: CGSize) {
+  static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+    CGSize(
+      width: lhs.width * rhs,
+      height: lhs.height * rhs
+    )
+  }
+  static func *= (lhs: inout CGSize, rhs: CGSize) {
     lhs.width *= rhs.width
     lhs.height *= rhs.height
   }
+  
+  
+  // MARK: - Division (/CGSize, /CGFloat, /=inout)
+  
+  static func / (lhs: CGSize, rhs: CGSize) -> CGSize {
+    CGSize(
+      width: lhs.width / rhs.width,
+      height: lhs.height / rhs.height
+    )
+  }
+  static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
+    CGSize(
+      width: lhs.width / rhs,
+      height: lhs.height / rhs
+    )
+  }
+  static func /= (lhs: inout CGSize, rhs: CGSize) {
+    lhs.width /= rhs.width
+    lhs.height /= rhs.height
+  }
+  
+  
+  // MARK: - Other
+  
+  var min: CGFloat { Swift.min(width, height) }
+  var minSquare: CGSize { .init(min) }
+  
+  var max: CGFloat { Swift.max(width, height) }
+  var maxSquare: CGSize { .init(max) }
+
+  var nonZero: CGSize? { self == .zero ? nil : self }
+  var zeroOnly: CGSize? { self == .zero ? self : nil }
 }
