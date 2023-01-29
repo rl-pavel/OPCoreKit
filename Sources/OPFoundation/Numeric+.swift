@@ -22,3 +22,15 @@ public extension BinaryFloatingPoint {
     return isDescending ? difference / maxDifference : 1 - (difference / maxDifference)
   }
 }
+
+
+public extension FloatingPoint {
+  var nonZero: Self? { isZero ? nil : self }
+  var onlyZero: Self? { isZero ? self : nil }
+}
+
+public extension Int {
+  var isZero: Bool { self == 0 }
+  var nonZero: Self? { isZero ? nil : self }
+  var onlyZero: Self? { isZero ? self : nil }
+}
